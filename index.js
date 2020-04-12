@@ -1,3 +1,4 @@
+
 loadInitInfo = () => {
   createOptions();
   loadAreasInfo('RUB', 'USD');
@@ -49,7 +50,7 @@ loadAreasInfo = (curFrom, curTo) => {
   turnLoadScreen();
   fetchResult(curFrom).then(result => {
     let rates = result.rates;
-    if (sumFrom.value > 0 && sumFrom.value!='') {
+    if (sumFrom.value > 0 && sumFrom.value != '') {
       let temp = sumFrom.value;
       sumFrom.value = sumTo.value;
       sumTo.value = temp;
@@ -94,43 +95,50 @@ turnOnButtons = () => {
 }
 
 swapAreas = () => {
-  let fromCurrencies = document.querySelectorAll('.from');
-  let toCurrencies = document.querySelectorAll('.to');
-  let chosenFrom;
-  let chosenTo;
-  fromCurrencies.forEach(el => el.classList.contains('chosen') ? chosenFrom = el : null);
-  toCurrencies.forEach(el => el.classList.contains('chosen') ? chosenTo = el : null);
-  handleSwap(chosenFrom, chosenTo);
-  loadAreasInfo(chosenTo.innerHTML, chosenFrom.innerHTML);
+  let fromCurrencyContainer = document.querySelector('.from.chosen');
+  let toCurrencyContainer = document.querySelector('.to.chosen');
+  let fromCurrency;
+  let toCurrency;
+  if (fromCurrencyContainer.children.length>0){
+    fromCurrency= document.querySelector('.firstSel.selector').value;
+  } else fromCurrency= fromCurrencyContainer.innerText;
+  
+  if (toCurrencyContainer.children.length>0){
+    toCurrency= document.querySelector('.secondSel.selector').value;
+  } else toCurrency= toCurrencyContainer.innerText;
+  
+  handleSwap(fromCurrency, toCurrency);
+  loadAreasInfo(toCurrency, fromCurrency);
 
 }
 
-handleSwap = (chosenFrom, chosenTo) => {
-  let currFrom = chosenFrom.innerHTML;
-  let currTo = chosenTo.innerHTML;
+handleSwap = (currFrom, currTo) => {
+
   document.querySelectorAll('.from').forEach(but => but.classList.remove('chosen'));
   document.querySelectorAll('.to').forEach(but => but.classList.remove('chosen'));
 
   if (currFrom != 'RUB' && currFrom != 'USD' && currFrom != 'EUR' && currFrom != 'JPY') {
-    let options = document.querySelector('.firstSel').children;
-    for (let opt of option) {
-      if (opt.value == currTo) {
-        opt.selected = true;
-        document.querySelector('.firstSel').value = opt.value;
-        opt.parentElement.parentElement.classList.add('chosen');
-      }
-    }
-  } else { document.querySelectorAll('.from').forEach(but => { but.innerHTML == currTo ? but.classList.add('chosen') : null }) }
-
-  if (currTo != 'RUB' && currTo != 'USD' && currTo != 'EUR' && currTo != 'JPY') {
-    let options = document.querySelector('.firstSel').children;
-    for (let opt of option)
+    let options = document.querySelector('.secondSel').children;
+    for (let opt of options) {
       if (opt.value == currFrom) {
         opt.selected = true;
         document.querySelector('.secondSel').value = opt.value;
+        opt.parentElement.parentElement.classList.add('chosen');
+      }
+    }
+  } else if(currFrom == 'RUB' || currFrom == 'USD' || currFrom == 'EUR' || currFrom == 'JPY')  { 
+    document.querySelectorAll('.to').forEach(but => { but.innerHTML == currFrom ? but.classList.add('chosen') : null }) }
+
+  if (currTo != 'RUB' && currTo != 'USD' && currTo != 'EUR' && currTo != 'JPY') {
+    let options = document.querySelector('.firstSel').children;
+    for (let opt of options)
+      if (opt.value == currTo) {
+        opt.selected = true;
+        document.querySelector('.firstSel').value = opt.value;
         opt.parentElement.parentElement.classList.add('chosen')
       }
-  } else { document.querySelectorAll('.to').forEach(but => { but.innerHTML == currFrom ? but.classList.add('chosen') : null }) }
+  } else if(currTo == 'RUB' || currTo == 'USD' || currTo == 'EUR' || currTo == 'JPY')  { 
+    document.querySelectorAll('.from').forEach(but => { but.innerHTML == currTo ? but.classList.add('chosen') : null }) }
 }
 
 convertRealTime = () => {

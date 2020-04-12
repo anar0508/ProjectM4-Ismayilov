@@ -169,25 +169,9 @@ footer {
   color: gray;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 main {
   padding-top: 65px;
-  padding-bottom: 30px;
+  padding-bottom: 60px;
   min-height: calc(100vh - 50px - 160px);
   display: flex;
   flex-direction: column;
@@ -301,7 +285,6 @@ p {
   background-color: white;
 }
 
-
 .arrow {
   display: inline-block;
   position: absolute;
@@ -370,7 +353,6 @@ input[type="number"] {
   justify-content: center;
   position: relative;
   top: 40px;
-
 }
 
 .loading-screen {
@@ -395,4 +377,9 @@ input[type="number"] {
 
 .background-changer {
   display: none;
+}
+
+.canvas-container{
+  width: 640px;
+  height: 258px;
 }

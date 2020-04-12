@@ -1,4 +1,3 @@
-
 loadInitInfo = () => {
   createOptions();
   loadAreasInfo('RUB', 'USD');
